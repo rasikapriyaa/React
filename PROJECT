@@ -1,0 +1,501 @@
+import React, { useState } from 'react';
+import './App.css';
+
+// Action Types
+const VIEW_HOME = 'HOME';
+const VIEW_LOGIN = 'LOGIN';
+const VIEW_SIGNUP = 'SIGNUP';
+const VIEW_DASHBOARD = 'DASHBOARD';
+const VIEW_SETTINGS = 'SETTINGS';
+const VIEW_ORDER_MANAGEMENT = 'ORDER_MANAGEMENT';
+const VIEW_MENU_MANAGEMENT = 'MENU_MANAGEMENT';
+const VIEW_CUSTOMER_MANAGEMENT = 'CUSTOMER_MANAGEMENT';
+
+// Components
+const HomePage = ({ setView }) => (
+  <div className="home-page">
+    <header className="header">
+      <h1>Restaurant Management System</h1>
+      <div className="header-buttons">
+        <button onClick={() => setView(VIEW_LOGIN)}>Login</button>
+        <button onClick={() => setView(VIEW_SIGNUP)}>Sign Up</button>
+        <button onClick={() => setView(VIEW_DASHBOARD)}>Dashboard</button>
+        <button onClick={() => setView(VIEW_SETTINGS)}>Settings</button>
+      </div>
+    </header>
+    <div className="home-content">
+      <h2>Welcome to Our Restaurant Management System</h2>
+      <p>Manage your restaurant efficiently with our comprehensive system.</p>
+    </div>
+  </div>
+);
+
+const LoginPage = ({ setView }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setIsLoggedIn(true); // Set login status to true
+    setView(VIEW_DASHBOARD); // Navigate to the Dashboard
+  };
+
+  return (
+    <div className="login-page">
+      <div className="form-container">
+        <h2>Login</h2>
+        {isLoggedIn && <p className="success-message">Logged in successfully!</p>}
+        <form onSubmit={handleLogin}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit">Login</button>
+        </form>
+        <button onClick={() => setView(VIEW_HOME)}>Back to Home</button>
+      </div>
+    </div>
+  );
+};
+
+const SignupPage = ({ setView }) => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isSignedUp, setIsSignedUp] = useState(false); // State to track signup status
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+    setIsSignedUp(true); // Set signup status to true
+    setView(VIEW_DASHBOARD); // Navigate to the Dashboard
+  };
+
+  return (
+    <div className="signup-page">
+      <div className="form-container">
+        <h2>Sign Up</h2>
+        {isSignedUp && <p className="success-message">Signed up successfully!</p>}
+        <form onSubmit={handleSignup}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit">Sign Up</button>
+        </form>
+        <button onClick={() => setView(VIEW_HOME)}>Back to Home</button>
+      </div>
+    </div>
+  );
+};
+
+const Dashboard = ({ setView }) => (
+  <div className="dashboard-page">
+    <nav className="dashboard-nav">
+      <button onClick={() => setView(VIEW_ORDER_MANAGEMENT)}>Order Management</button>
+      <button onClick={() => setView(VIEW_MENU_MANAGEMENT)}>Menu Management</button>
+      <button onClick={() => setView(VIEW_CUSTOMER_MANAGEMENT)}>Customer Management</button>
+      <button onClick={() => setView(VIEW_SETTINGS)}>Settings</button>
+      <button onClick={() => setView(VIEW_HOME)}>Back to Home</button>
+    </nav>
+    <main className="dashboard-main">
+      <h2>Dashboard</h2>
+      <div className="dashboard-summary">
+        <div className="summary-item">
+          <h3>Overview</h3>
+          <p>The Restaurant Management System is a sophisticated tool designed to streamline restaurant operations and enhance efficiency. It features a comprehensive dashboard that provides a centralized view of critical metrics, such as total orders, revenue, and operational status, with real-time updates on ongoing orders and staff performance. The system includes robust order management capabilities, allowing users to track and manage orders from creation to completion, update statuses, and generate detailed reports. Menu management tools enable easy addition, updating, and removal of menu items, along with price adjustments and special promotions. Customer management features maintain detailed customer profiles, track preferences and order history, and segment customers into categories for personalized service. The system offers secure login and signup processes with role-based access control, ensuring data security and user management.</p>
+        </div>
+        <div className="summary-item">
+          <h3>Recent Activities</h3>
+          <p>Added Lasagna Bolognese to the menu - $14.00</p>
+          <p>Added Tiramisu to the menu - $8.00</p>
+          <p>Added Fettuccine Alfredo to the menu - $13.00</p>
+          <p>Added Bruschetta to the menu - $7.00</p>
+          <p>Added Caprese Salad to the menu - $11.00</p>
+          <p>Added Gelato to the menu - $6.00</p>
+          <p>Added Risotto ai Funghi to the menu - $16.00</p>
+          <p>Added Garlic Bread to the menu - $5.00</p>
+          <p>Added Panacotta to the menu - $9.00</p>
+        </div>
+        <div className="summary-item">
+          <h3>Performance</h3>
+          <p>Our restaurant is currently focusing on several key performance metrics to ensure optimal operation and customer satisfaction. The average order processing time stands at 12 minutes, with a goal to reduce it to 10 minutes through the implementation of a new kitchen display system. Customer satisfaction remains strong at 4.5 out of 5, which we aim to maintain or improve through ongoing staff training and feedback analysis. The table turnover rate is currently at 45 tables per day, with a target increase to 50 tables by introducing a reservation system to manage peak hours. Monthly sales growth is at 8%, and we are working towards a 10% growth by launching new seasonal menus and promotional campaigns. Food waste is at 6%, with efforts in place to reduce it to 4% through better portion control and inventory management. The employee turnover rate is at 15% annually, and we aim to lower it to 10% by enhancing benefits and recognition programs. Online ordering accuracy is at 98%, with a goal to reach 99% through improved procedures and staff training. Lastly, the average revenue per customer is currently $35, with an objective to increase it to $40 by implementing upselling strategies and offering higher-priced menu items. These metrics are crucial in evaluating our restaurant's performance and guiding continuous improvement efforts.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+);
+
+const OrderManagement = ({ setView }) => (
+  <div className="management-page">
+    <h2>Order Management</h2>
+    <div className="management-content">
+      <ul>
+        <li>Order #123 - Table 5 - Pending</li>
+        <li>Order #124 - Table 3 - Completed</li>
+        <li>Order #125 - Table 8 - In Progress</li>
+        <li>Order #126 - Table 2 - Pending</li>
+        <li>Order #127 - Table 7 - Completed</li>
+        <li>Order #128 - Table 4 - In Progress</li>
+        <li>Order #129 - Table 6 - Pending</li>
+        <li>Order #130 - Table 9 - Completed</li>
+        <li>Order #131 - Table 1 - In Progress</li>
+        <li>Order #132 - Table 10 - Pending</li>
+        <li>Order #133 - Table 12 - Completed</li>
+        <li>Order #134 - Table 11 - In Progress</li>
+        <li>Order #135 - Table 15 - Pending</li>
+        <li>Order #136 - Table 14 - Completed</li>
+        <li>Order #137 - Table 13 - In Progress</li>
+        <li>Order #138 - Table 16 - Pending</li>
+        <li>Order #139 - Table 18 - Completed</li>
+        <li>Order #140 - Table 19 - In Progress</li>
+        <li>Order #141 - Table 17 - Pending</li>
+        <li>Order #142 - Table 20 - Completed</li>
+      </ul>
+    </div>
+    <button onClick={() => setView(VIEW_DASHBOARD)}>Back to Dashboard</button>
+  </div>
+);
+
+const MenuManagement = ({ setView }) => (
+  <div className="management-page">
+    <h2>Menu Management</h2>
+    <div className="management-content">
+      <ul>
+        <li>Pizza Margherita - $12.00</li>
+        <li>Spaghetti Carbonara - $15.00</li>
+        <li>Caesar Salad - $10.00</li>
+        <li>Lasagna Bolognese - $14.00</li>
+        <li>Tiramisu - $8.00</li>
+        <li>Fettuccine Alfredo - $13.00</li>
+        <li>Bruschetta - $7.00</li>
+        <li>Caprese Salad - $11.00</li>
+        <li>Gelato - $6.00</li>
+        <li>Risotto ai Funghi - $16.00</li>
+        <li>Garlic Bread - $5.00</li>
+        <li>Panna Cotta - $9.00</li>
+      </ul>
+    </div>
+    <button onClick={() => setView(VIEW_DASHBOARD)}>Back to Dashboard</button>
+  </div>
+);
+
+const CustomerManagement = ({ setView }) => (
+  <div className="management-page">
+    <h2>Customer Management</h2>
+    <div className="management-content">
+      <ul>
+        <li>John Doe - VIP Customer</li>
+        <li>Jane Smith - Regular Customer</li>
+        <li>Michael Johnson - New Customer</li>
+        <li>Emily Brown - Regular Customer</li>
+        <li>David Wilson - VIP Customer</li>
+        <li>Olivia Davis - New Customer</li>
+        <li>Daniel Martinez - Regular Customer</li>
+        <li>Sarah Lee - VIP Customer</li>
+        <li>James Taylor - New Customer</li>
+        <li>Patricia Anderson - Regular Customer</li>
+        <li>Robert Thomas - VIP Customer</li>
+        <li>Mary Clark - New Customer</li>
+        <li>Christopher Lewis - Regular Customer</li>
+        <li>Linda Walker - VIP Customer</li>
+        <li>Anthony King - New Customer</li>
+        <li>Jennifer Hall - Regular Customer</li>
+        <li>Matthew Wright - VIP Customer</li>
+        <li>Amanda Young - New Customer</li>
+        <li>Joshua Hernandez - Regular Customer</li>
+        <li>Jessica Allen - VIP Customer</li>
+      </ul>
+    </div>
+    <button onClick={() => setView(VIEW_DASHBOARD)}>Back to Dashboard</button>
+  </div>
+);
+
+const SettingsPage = ({ setView }) => (
+  <div className="settings-page">
+    <h2>Settings</h2>
+    <div className="settings-content">
+      <label>
+        Theme:
+        <select>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </label>
+      <label>
+        Language:
+        <select>
+          <option value="en">English</option>
+          <option value="fr">French</option>
+          <option value="it">Italian</option>
+        </select>
+      </label>
+    </div>
+    <button onClick={() => setView(VIEW_DASHBOARD)}>Back to Dashboard</button>
+  </div>
+);
+
+const App = () => {
+  const [view, setView] = useState(VIEW_HOME);
+
+  switch (view) {
+    case VIEW_HOME:
+      return <HomePage setView={setView} />;
+    case VIEW_LOGIN:
+      return <LoginPage setView={setView} />;
+    case VIEW_SIGNUP:
+      return <SignupPage setView={setView} />;
+    case VIEW_DASHBOARD:
+      return <Dashboard setView={setView} />;
+    case VIEW_ORDER_MANAGEMENT:
+      return <OrderManagement setView={setView} />;
+    case VIEW_MENU_MANAGEMENT:
+      return <MenuManagement setView={setView} />;
+    case VIEW_CUSTOMER_MANAGEMENT:
+      return <CustomerManagement setView={setView} />;
+    case VIEW_SETTINGS:
+      return <SettingsPage setView={setView} />;
+    default:
+      return <HomePage setView={setView} />;
+  }
+};
+
+export default App;
+CSS
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Background styling for login and signup pages */
+body.login-page,
+body.signup-page {
+  background-image: url('https://t3.ftcdn.net/jpg/02/05/87/60/360_F_205876015_hYYs7ugqoU8QAobSS3TbnGQ92qyS5gEc.jpg');
+  background-size: cover;
+  background-position: center;
+  color: #600b0b;
+  height: 100vh; /* Ensure full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app {
+  text-align: center;
+}
+
+.form-container {
+  background-color: rgba(0, 0, 0, 0.7); /* Darker, more opaque background */
+  padding: 40px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px; /* Controls the width of the form */
+  box-sizing: border-box; /* Ensures padding doesn't affect the overall width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added shadow for depth */
+}
+
+.form-container h2 {
+  margin-bottom: 20px;
+  color: #fff;
+  font-size: 1.5rem; /* Adjusted font size for header */
+}
+
+form input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff; /* Improved input readability */
+}
+
+form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #ff6f61; /* Modern button color */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem; /* Adjusted font size */
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+form button:hover {
+  background-color: #e55b50; /* Slightly darker shade on hover */
+}
+
+.header {
+  background-color: #f9f3f3; /* Darker header for better contrast */
+  color: #fff;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.8rem; /* Increased font size */
+}
+
+.header-buttons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  background-color: #ff6f61; /* Matching button color */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem; /* Adjusted font size */
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.header-buttons button:hover {
+  background-color: #e55b50; /* Slightly darker shade on hover */
+}
+
+.home-content {
+  padding: 50px;
+}
+
+.home-content h2 {
+  font-size: 2.5rem; /* Increased font size */
+  margin-bottom: 20px;
+  color: #fdf7f7; /* Improved contrast */
+}
+
+.home-content p {
+  font-size: 1.2rem;
+  color: #efe8e8; /* Improved readability */
+}
+
+.dashboard-page {
+  padding: 20px;
+  background-image: url('https://www.shutterstock.com/image-photo/empty-wood-table-top-on-260nw-370296803.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.dashboard-nav button {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #535b9b; /* Matching button color */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem; /* Adjusted font size */
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.dashboard-nav button:hover {
+  background-color: #2f1964; /* Slightly darker shade on hover */
+}
+
+.dashboard-main {
+  margin-top: 20px;
+}
+
+.dashboard-summary {
+  display: flex;
+  justify-content: space-between;
+}
+
+.summary-item {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  width: 30%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+}
+
+.management-page {
+  padding: 20px;
+  background-image: url('https://static.vecteezy.com/system/resources/previews/031/210/510/non_2x/cozy-cafe-bistro-with-blurred-background-and-wooden-montage-generative-ai-photo.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.management-content {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.management-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.management-content ul li {
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+}
+
+.settings-page {
+  padding: 20px;
+}
+
+.settings-components {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.settings-section {
+  margin-bottom: 20px;
+}
+
+.settings-section select {
+  width: calc(100% - 20px); /* Adjusted for padding */
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem; /* Adjusted font size */
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #361064; /* Matching button color */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem; /* Adjusted font size */
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+button:hover {
+  background-color: #e55b50; /* Slightly darker shade on hover */
+}
+
+
+
+
